@@ -1,29 +1,29 @@
 ﻿namespace Pforr.Guestbook.Domain.Abstractions;
 
-public abstract class Entity : IEquatable<Entity>
+public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : EntityId
 {
   private readonly List<IDomainEvent> domainEvents = [];
 
-  protected Entity(Guid id) => Id = id;
+  protected Entity(TId id) => Id = id;
 
-  public Guid Id { get; private init; }
+  public TId Id { get; private init; }
 
   public IEnumerable<IDomainEvent> DomainEvents => domainEvents.AsReadOnly();
 
   protected void Raise(IDomainEvent domainEvent) => domainEvents.Add(domainEvent);
 
 
-  public static bool operator ==(Entity? first, Entity? second)
+  public static bool operator ==(Entity<TId>? first, Entity<TId>? second)
   {
     return first is not null && second is not null && first.Equals(second);
   }
 
-  public static bool operator !=(Entity? first, Entity? second)
+  public static bool operator !=(Entity<TId>? first, Entity<TId>? second)
   {
     return !(first == second);
   }
 
-  public bool Equals(Entity? other)
+  public bool Equals(Entity<TId>? other)
   {
     if (other is null)
     {
@@ -31,6 +31,11 @@ public abstract class Entity : IEquatable<Entity>
     }
 
     if (other.GetType() != GetType())
+    {
+      return false;
+    }
+
+    if (other.Id.GetType() != Id.GetType())
     {
       return false;
     }
@@ -50,7 +55,12 @@ public abstract class Entity : IEquatable<Entity>
       return false;
     }
 
-    if (obj is not Entity entity)
+    if (obj is not Entity<TId> entity)
+    {
+      return false;
+    }
+
+    if (entity.Id.GetType() != Id.GetType())
     {
       return false;
     }

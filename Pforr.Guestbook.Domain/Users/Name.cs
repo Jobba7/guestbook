@@ -49,4 +49,9 @@ public sealed record Name
 
     return Result.Success(new Name(name));
   }
+
+  public override string ToString()
+  {
+    return Value.ToString();
+  }
 }

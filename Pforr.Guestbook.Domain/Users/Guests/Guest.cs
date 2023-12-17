@@ -2,11 +2,11 @@
 
 namespace Pforr.Guestbook.Domain.Users.Guests;
 
-public sealed class Guest : User
+public sealed class Guest : User<GuestId>
 {
   private readonly List<Entry> entries = [];
 
-  private Guest(Guid id, Name name, Email? email = null) : base(id, name, email) { }
+  private Guest(GuestId id, Name name, Email? email = null) : base(id, name, email) { }
 
   public IEnumerable<Entry> Entries => entries.AsReadOnly();
 

@@ -3,9 +3,9 @@ using Pforr.Guestbook.Domain.Users.Guests;
 
 namespace Pforr.Guestbook.Domain.Entries;
 
-public sealed class Entry : Entity
+public sealed class Entry : Entity<EntryId>
 {
-  private Entry(Guid id, Content content, Guest author, DateOnly? visited = null) : base(id)
+  private Entry(EntryId id, Content content, Guest author, DateOnly? visited = null) : base(id)
   {
     Content = content;
     Author = author;
@@ -30,7 +30,7 @@ public sealed class Entry : Entity
       return Result.Failure<Entry>(GuestErrors.AlreadyExistsWithDate(author, visitDate));
     }
 
-    return Result.Success(new Entry(Guid.NewGuid(), content, author, visitDate));
+    return Result.Success(new Entry(new EntryId(Guid.NewGuid()), content, author, visitDate));
   }
 
   private static bool InFuture(DateOnly? visitDate) => visitDate is not null && visitDate > DateOnly.FromDateTime(DateTime.Now);

@@ -2,9 +2,9 @@
 
 namespace Pforr.Guestbook.Domain.Users;
 
-public abstract class User : Entity
+public abstract class User<TId> : Entity<TId> where TId : EntityId
 {
-  protected User(Guid id, Name name, Email? email = null) : base(id)
+  protected User(TId id, Name name, Email? email = null) : base(id)
   {
     Name = name;
     Email = email;
