@@ -75,6 +75,6 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : EntityId
 
   public override string ToString()
   {
-    return $"Entity {Id}";
+    return $"Entity {Id.Value}";
   }
 }
