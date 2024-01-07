@@ -13,10 +13,9 @@ public class Result
   }
 
   [MemberNotNullWhen(false, nameof(Error))]
-  public virtual bool IsSuccess { get; }
+  public bool IsSuccess { get; }
 
-  [MemberNotNullWhen(true, nameof(Error))]
-  public virtual bool IsFailure => !IsSuccess;
+  public bool IsFailure => !IsSuccess;
 
   public Error? Error { get; }
 
@@ -26,20 +25,17 @@ public class Result
 
   public static Result Failure(Error error) => new(error);
 
-  public static Result<TValue> Failure<TValue>(Error error) => new(default, error);
+  public static Result<TValue> Failure<TValue>(Error error) => new(error);
 }
 
 public class Result<TValue> : Result
 {
   protected internal Result(TValue value) : base() => Value = value;
 
-  protected internal Result(TValue? value, Error error) : base(error) => Value = value;
+  protected internal Result(Error error) : base(error) { }
 
   [MemberNotNullWhen(true, nameof(Value))]
-  public override bool IsSuccess => base.IsSuccess;
-
-  [MemberNotNullWhen(false, nameof(Value))]
-  public override bool IsFailure => base.IsFailure;
+  public new bool IsSuccess => base.IsSuccess;
 
   public TValue? Value { get; }
 }
