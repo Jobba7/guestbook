@@ -1,4 +1,6 @@
-﻿using Pforr.Guestbook.Domain.Entries;
+﻿using Pforr.Guestbook.Domain.Abstractions;
+using Pforr.Guestbook.Domain.Entries;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pforr.Guestbook.Domain.Users.Guests;
 
@@ -6,9 +8,30 @@ public sealed class Guest : User<GuestId>
 {
   private readonly List<Entry> entries = [];
 
-  private Guest(GuestId id, Name name, Email? email = null) : base(id, name, email) { }
+  private Guest(Name name, Email? email = null) : base(new GuestId(Guid.NewGuid()), name, email) { }
 
   public IEnumerable<Entry> Entries => entries.AsReadOnly();
 
-  public bool HasEntryOn(DateOnly? day) => day is not null && entries.Any(entry => entry.Visited == day);
+  public static Guest Create(Name name, Email? email = null)
+  {
+    return new Guest(name, email);
+  }
+
+  public Result<Entry> AddEntry(Content content, DateOnly? visitDate = null)
+  {
+    if (HasEntryOn(visitDate))
+    {
+      return Result.Failure<Entry>(GuestErrors.AlreadyExistsWithDate(this, visitDate.Value));
+    }
+
+    return Entry.Create(content, Id, visitDate);
+  }
+
+  private bool HasEntryOn([NotNullWhen(true)] DateOnly? date)
+  {
+    return date is not null &&
+      entries
+      .Where(entry => entry.Visited != null)
+      .Any(entry => entry.Visited == date);
+  }
 }

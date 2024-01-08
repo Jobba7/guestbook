@@ -5,33 +5,30 @@ namespace Pforr.Guestbook.Domain.Entries;
 
 public sealed class Entry : Entity<EntryId>
 {
-  private Entry(EntryId id, Content content, Guest author, DateOnly? visited = null) : base(id)
+  private Entry(Content content, GuestId authorId, DateOnly? visited = null) : base(new EntryId(Guid.NewGuid()))
   {
     Content = content;
-    Author = author;
+    AuthorId = authorId;
     Visited = visited;
   }
 
   public Content Content { get; private set; }
 
-  public Guest Author { get; private set; }
+  public GuestId AuthorId { get; private set; }
 
   public DateOnly? Visited { get; private set; }
 
-  public static Result<Entry> Create(Content content, Guest author, DateOnly? visitDate = null)
+  public static Result<Entry> Create(Content content, GuestId authorId, DateOnly? visitDate = null)
   {
     if (InFuture(visitDate))
     {
       return Result.Failure<Entry>(GuestErrors.VisitDateInFuture(visitDate));
     }
 
-    if (author.HasEntryOn(visitDate))
-    {
-      return Result.Failure<Entry>(GuestErrors.AlreadyExistsWithDate(author, visitDate));
-    }
-
-    return Result.Success(new Entry(new EntryId(Guid.NewGuid()), content, author, visitDate));
+    return Result.Success(new Entry(content, authorId, visitDate));
   }
 
-  private static bool InFuture(DateOnly? visitDate) => visitDate is not null && visitDate > DateOnly.FromDateTime(DateTime.Now);
+  private static bool InFuture(DateOnly? visitDate) => visitDate is not null && visitDate > today;
+
+  private static readonly DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 }
