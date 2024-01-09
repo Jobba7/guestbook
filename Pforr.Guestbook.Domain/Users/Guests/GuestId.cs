@@ -1,5 +1,5 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
+﻿using Guestbook.Domain.Abstractions;
 
-namespace Pforr.Guestbook.Domain.Users.Guests;
+namespace Guestbook.Domain.Users.Guests;
 
 public sealed record GuestId(Guid Value) : EntityId(Value);

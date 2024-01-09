@@ -1,7 +1,7 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
+﻿using Guestbook.Domain.Abstractions;
 using System.Globalization;
 
-namespace Pforr.Guestbook.Domain.Users;
+namespace Guestbook.Domain.Users;
 
 public sealed record Name
 {

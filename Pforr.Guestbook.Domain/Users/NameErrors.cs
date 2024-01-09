@@ -1,6 +1,6 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
+﻿using Guestbook.Domain.Abstractions;
 
-namespace Pforr.Guestbook.Domain.Users;
+namespace Guestbook.Domain.Users;
 
 public sealed class NameErrors
 {

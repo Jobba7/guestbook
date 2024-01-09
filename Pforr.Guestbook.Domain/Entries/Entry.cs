@@ -1,7 +1,7 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
-using Pforr.Guestbook.Domain.Users.Guests;
+﻿using Guestbook.Domain.Abstractions;
+using Guestbook.Domain.Users.Guests;
 
-namespace Pforr.Guestbook.Domain.Entries;
+namespace Guestbook.Domain.Entries;
 
 public sealed class Entry : Entity<EntryId>
 {

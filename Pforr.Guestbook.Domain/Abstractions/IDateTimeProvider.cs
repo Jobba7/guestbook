@@ -1,6 +1,6 @@
-﻿namespace Pforr.Guestbook.Domain.Abstractions;
+﻿namespace Guestbook.Domain.Abstractions;
 
 public interface IDateTimeProvider
 {
-    DateTime UtcNow { get; }
+  DateTime UtcNow { get; }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Pforr.Guestbook.Domain.Abstractions;
+namespace Guestbook.Domain.Abstractions;
 
 public class Result
 {

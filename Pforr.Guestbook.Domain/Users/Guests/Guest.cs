@@ -1,8 +1,8 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
-using Pforr.Guestbook.Domain.Entries;
+﻿using Guestbook.Domain.Abstractions;
+using Guestbook.Domain.Entries;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Pforr.Guestbook.Domain.Users.Guests;
+namespace Guestbook.Domain.Users.Guests;
 
 public sealed class Guest : User<GuestId>
 {

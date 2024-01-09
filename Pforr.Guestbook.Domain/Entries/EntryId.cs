@@ -1,6 +1,6 @@
-﻿using Pforr.Guestbook.Domain.Abstractions;
+﻿using Guestbook.Domain.Abstractions;
 
-namespace Pforr.Guestbook.Domain.Entries;
+namespace Guestbook.Domain.Entries;
 
 public sealed record EntryId(Guid Value) : EntityId(Value);
 

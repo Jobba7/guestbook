@@ -1,4 +1,4 @@
-﻿namespace Pforr.Guestbook.Domain.Abstractions;
+﻿namespace Guestbook.Domain.Abstractions;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : EntityId
 {
