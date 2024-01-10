@@ -10,7 +10,7 @@ public sealed record Name
 
   private const char Space = ' ';
 
-  private Name(string value) => Value = value;
+  private Name(string value) => this.Value = value;
 
   public string Value { get; }
 
@@ -52,6 +52,6 @@ public sealed record Name
 
   public override string ToString()
   {
-    return Value.ToString();
+    return this.Value.ToString();
   }
 }

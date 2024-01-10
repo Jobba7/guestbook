@@ -2,7 +2,7 @@
 
 namespace Guestbook.Domain.Users;
 
-public sealed class NameErrors
+public static class NameErrors
 {
   public static readonly Error TooLong = new("Names.TooLong", $"The name must not be longer than {Name.MaxLength} characters");
 

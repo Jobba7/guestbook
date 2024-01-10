@@ -2,12 +2,13 @@
 
 namespace Guestbook.Domain.Users;
 
-public abstract class User<TId> : Entity<TId> where TId : EntityId
+public abstract class User<TId> : Entity<TId>
+    where TId : EntityId
 {
   protected User(TId id, Name name, Email? email = null) : base(id)
   {
-    Name = name;
-    Email = email;
+    this.Name = name;
+    this.Email = email;
   }
 
   public Name Name { get; private set; }
@@ -16,6 +17,6 @@ public abstract class User<TId> : Entity<TId> where TId : EntityId
 
   public override string ToString()
   {
-    return Name.ToString();
+    return this.Name.ToString();
   }
 }

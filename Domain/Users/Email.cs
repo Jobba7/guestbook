@@ -7,8 +7,8 @@ public sealed class Email
 {
   private Email(string address)
   {
-    Address = address;
-    Confirmed = false;
+    this.Address = address;
+    this.Confirmed = false;
   }
 
   public string Address { get; private set; }
@@ -30,7 +30,7 @@ public sealed class Email
     return Result.Success(new Email(result.Address));
   }
 
-  public void Confirm() => Confirmed = true;
+  public void Confirm() => this.Confirmed = true;
 
   public Result TryChange(string? email)
   {
@@ -38,8 +38,8 @@ public sealed class Email
 
     if (result.IsSuccess)
     {
-      Address = result.Value.Address;
-      Confirmed = false;
+      this.Address = result.Value.Address;
+      this.Confirmed = false;
     }
 
     return result;

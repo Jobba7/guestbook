@@ -6,8 +6,8 @@ public sealed record Content
 {
   private Content(string text, DateTime lastEdited)
   {
-    Text = text;
-    LastEdited = lastEdited;
+    this.Text = text;
+    this.LastEdited = lastEdited;
   }
 
   public string Text { get; }

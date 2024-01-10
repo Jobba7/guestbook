@@ -1,22 +1,21 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Guestbook.Domain.Abstractions;
-
 public class Result
 {
-  protected internal Result() => IsSuccess = true;
+  protected internal Result() => this.IsSuccess = true;
 
   protected internal Result(Error error)
   {
-    IsSuccess = false;
-    Error = error;
+    this.IsSuccess = false;
+    this.Error = error;
   }
 
   [MemberNotNullWhen(false, nameof(Error))]
   public bool IsSuccess { get; }
 
   [MemberNotNullWhen(true, nameof(Error))]
-  public bool IsFailure => !IsSuccess;
+  public bool IsFailure => !this.IsSuccess;
 
   public Error? Error { get; }
 
@@ -31,9 +30,11 @@ public class Result
 
 public class Result<TValue> : Result
 {
-  protected internal Result(TValue value) : base() => Value = value;
+  protected internal Result(TValue value) : base() => this.Value = value;
 
-  protected internal Result(Error error) : base(error) { }
+  protected internal Result(Error error) : base(error)
+  {
+  }
 
   [MemberNotNullWhen(true, nameof(Value))]
   public new bool IsSuccess => base.IsSuccess;

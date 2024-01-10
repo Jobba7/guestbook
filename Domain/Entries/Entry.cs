@@ -7,9 +7,9 @@ public sealed class Entry : Entity<EntryId>
 {
   private Entry(Content content, GuestId authorId, DateOnly? visited = null) : base(new EntryId(Guid.NewGuid()))
   {
-    Content = content;
-    AuthorId = authorId;
-    Visited = visited;
+    this.Content = content;
+    this.AuthorId = authorId;
+    this.Visited = visited;
   }
 
   public Content Content { get; private set; }
@@ -28,7 +28,10 @@ public sealed class Entry : Entity<EntryId>
     return Result.Success(new Entry(content, authorId, visitDate));
   }
 
-  private static bool InFuture(DateOnly? visitDate) => visitDate is not null && visitDate > today;
-
-  private static readonly DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+  private static bool InFuture(DateOnly? visitDate)
+  {
+    return
+      visitDate is not null &&
+      visitDate > DateOnly.FromDateTime(DateTime.Now);
+  }
 }

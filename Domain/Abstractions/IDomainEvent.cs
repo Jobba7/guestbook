@@ -1,3 +1,5 @@
 ﻿namespace Guestbook.Domain.Abstractions;
 
-public interface IDomainEvent;
+public interface IDomainEvent
+{
+}
