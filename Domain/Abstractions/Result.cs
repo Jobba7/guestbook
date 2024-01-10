@@ -15,6 +15,7 @@ public class Result
   [MemberNotNullWhen(false, nameof(Error))]
   public bool IsSuccess { get; }
 
+  [MemberNotNullWhen(true, nameof(Error))]
   public bool IsFailure => !IsSuccess;
 
   public Error? Error { get; }
@@ -36,6 +37,9 @@ public class Result<TValue> : Result
 
   [MemberNotNullWhen(true, nameof(Value))]
   public new bool IsSuccess => base.IsSuccess;
+
+  [MemberNotNullWhen(false, nameof(Value))]
+  public new bool IsFailure => base.IsFailure;
 
   public TValue? Value { get; }
 }

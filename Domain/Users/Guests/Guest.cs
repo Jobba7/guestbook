@@ -24,13 +24,21 @@ public sealed class Guest : User<GuestId>
       return Result.Failure<Entry>(GuestErrors.AlreadyExistsWithDate(this, visitDate.Value));
     }
 
-    return Entry.Create(content, Id, visitDate);
+    var result = Entry.Create(content, Id, visitDate);
+
+    if (result.IsFailure)
+    {
+      return result;
+    }
+
+    entries.Add(result.Value);
+
+    return result;
   }
 
   private bool HasEntryOn([NotNullWhen(true)] DateOnly? date)
   {
-    return date is not null &&
-      entries
+    return date is not null && entries
       .Where(entry => entry.Visited != null)
       .Any(entry => entry.Visited == date);
   }
