@@ -1,5 +1,5 @@
 ﻿using Guestbook.Domain.Abstractions;
-using Guestbook.Domain.Users.Guests;
+using Guestbook.Domain.Guests;
 
 namespace Guestbook.Domain.Entries;
 

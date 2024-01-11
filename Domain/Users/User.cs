@@ -3,7 +3,7 @@
 namespace Guestbook.Domain.Users;
 
 public abstract class User<TId> : Entity<TId>
-    where TId : EntityId
+    where TId : notnull
 {
   protected User(TId id, Name name, Email? email = null) : base(id)
   {
