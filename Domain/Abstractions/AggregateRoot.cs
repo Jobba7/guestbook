@@ -1,7 +1,8 @@
 ﻿namespace Guestbook.Domain.Abstractions;
-public abstract class AggregateRoot : Entity<Guid>
+public abstract class AggregateRoot<TId> : Entity<TId>
+  where TId : notnull
 {
-  protected AggregateRoot(Guid id) : base(id)
+  protected AggregateRoot(TId id) : base(id)
   {
   }
 }
