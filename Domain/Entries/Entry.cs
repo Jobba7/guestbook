@@ -3,35 +3,20 @@ using Guestbook.Domain.Users.Guests;
 
 namespace Guestbook.Domain.Entries;
 
-public sealed class Entry : Entity<EntryId>
+public sealed class Entry : AggregateRoot<EntryId>
 {
-  private Entry(Content content, GuestId authorId, DateOnly? visited = null) : base(new EntryId(Guid.NewGuid()))
+  private Entry(EntryId id, string content, GuestId guestId) : base(id)
   {
-    this.Content = content;
-    this.AuthorId = authorId;
-    this.Visited = visited;
+    Content = content;
+    GuestId = guestId;
   }
 
-  public Content Content { get; private set; }
+  public string Content { get; private set; }
 
-  public GuestId AuthorId { get; private set; }
+  public GuestId GuestId { get; private set; }
 
-  public DateOnly? Visited { get; private set; }
-
-  public static Result<Entry> Create(Content content, GuestId authorId, DateOnly? visitDate = null)
+  public static Entry Create(string content, GuestId guestId)
   {
-    if (InFuture(visitDate))
-    {
-      return Result.Failure<Entry>(GuestErrors.VisitDateInFuture(visitDate));
-    }
-
-    return Result.Success(new Entry(content, authorId, visitDate));
-  }
-
-  private static bool InFuture(DateOnly? visitDate)
-  {
-    return
-      visitDate is not null &&
-      visitDate > DateOnly.FromDateTime(DateTime.Now);
+    return new(EntryId.New(), content, guestId);
   }
 }

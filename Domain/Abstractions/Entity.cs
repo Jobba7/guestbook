@@ -1,7 +1,7 @@
 ﻿namespace Guestbook.Domain.Abstractions;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
-    where TId : EntityId
+    where TId : notnull
 {
   private readonly List<IDomainEvent> domainEvents = [];
 
@@ -38,7 +38,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
       return false;
     }
 
-    return other.Id == this.Id;
+    return Id.Equals(other.Id);
   }
 
   public override bool Equals(object? obj)
@@ -63,12 +63,12 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
       return false;
     }
 
-    return entity.Id == this.Id;
+    return Id.Equals(entity.Id);
   }
 
   public override int GetHashCode() => this.Id.GetHashCode();
 
-  public override string ToString() => $"Entity {this.Id.Value}";
+  public override string ToString() => $"Entity {Id}";
 
-  protected void Raise(IDomainEvent domainEvent) => this.domainEvents.Add(domainEvent);
+  protected void Add(IDomainEvent domainEvent) => this.domainEvents.Add(domainEvent);
 }
