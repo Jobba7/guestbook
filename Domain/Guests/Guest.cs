@@ -5,7 +5,7 @@ namespace Guestbook.Domain.Guests;
 
 public sealed class Guest : AggregateRoot<GuestId>
 {
-  private readonly List<EntryId> entrieIds = [];
+  private readonly List<EntryId> entryIds = [];
 
   private Guest(GuestId id, string name) : base(id)
   {
@@ -14,7 +14,7 @@ public sealed class Guest : AggregateRoot<GuestId>
 
   public string Name { get; private set; }
 
-  public IReadOnlyList<EntryId> Entries => entrieIds.AsReadOnly();
+  public IReadOnlyList<EntryId> Entries => entryIds.AsReadOnly();
 
   public static Guest Create(string name)
   {
@@ -23,6 +23,6 @@ public sealed class Guest : AggregateRoot<GuestId>
 
   public void AddEntry(EntryId entryId)
   {
-    entrieIds.Add(entryId);
+    entryIds.Add(entryId);
   }
 }
