@@ -284,6 +284,9 @@ dotnet_diagnostic.CA1724.severity = none
 # CA1812: Avoid uninstantiated internal classes
 dotnet_diagnostic.CA1812.severity = none
 
+# CA1725: Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = none
+
 [*.{cs,vb}]
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion

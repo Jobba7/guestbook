@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guestbook.Application", "Src\Guestbook.Application\Guestbook.Application.csproj", "{4E3C527C-835B-4690-B881-E0AB6608F3D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8F2D1F4D-A09F-4702-9E3D-87401B979825}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\.editorconfig = Tests\.editorconfig
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guestbook.Application.UnitTests", "Tests\Guestbook.Application.UnitTests\Guestbook.Application.UnitTests.csproj", "{1FD4C53A-E5F2-4DA7-B33D-EB345ED50D29}"
 EndProject

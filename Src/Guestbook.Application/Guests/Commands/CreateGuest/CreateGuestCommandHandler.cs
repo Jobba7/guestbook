@@ -2,13 +2,13 @@
 using Guestbook.Domain.Abstractions;
 using Guestbook.Domain.Guests;
 
-namespace Guestbook.Application.Guests.Commands.AddGuest;
+namespace Guestbook.Application.Guests.Commands.CreateGuest;
 
-internal sealed class AddGuestCommandHandler(IGuestRepository guestRepository) : ICommandHandler<AddGuestCommand, Guest>
+public sealed class CreateGuestCommandHandler(IGuestRepository guestRepository) : ICommandHandler<CreateGuestCommand, Guest>
 {
   private readonly IGuestRepository guestRepository = guestRepository;
 
-  public async Task<Result<Guest>> Handle(AddGuestCommand command, CancellationToken cancellationToken)
+  public async Task<Result<Guest>> Handle(CreateGuestCommand command, CancellationToken cancellationToken)
   {
     var guest = Guest.Create(command.Name);
 
