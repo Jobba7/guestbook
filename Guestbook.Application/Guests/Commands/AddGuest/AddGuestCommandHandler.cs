@@ -8,7 +8,7 @@ internal sealed class AddGuestCommandHandler(IGuestRepository guestRepository) :
 {
   private readonly IGuestRepository guestRepository = guestRepository;
 
-  public async Task<Result<Guest>> Handle(AddGuestCommand command, CancellationToken cancellationToken = default)
+  public async Task<Result<Guest>> Handle(AddGuestCommand command, CancellationToken cancellationToken)
   {
     var guest = Guest.Create(command.Name);
 
