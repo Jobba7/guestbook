@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Guestbook.Application.Abstractions;
 using Guestbook.Application.Guests.Commands.CreateGuest;
 using Guestbook.Application.UnitTests.Guests.Commands.TestUtils;
 using Guestbook.Application.UnitTests.TestUtils.Guests.Extensions;
@@ -9,14 +10,16 @@ namespace Guestbook.Application.UnitTests.Guests.Commands.CreateGuest;
 public class CreateGuestCommandHandlerTests
 {
   private readonly Mock<IGuestRepository> mockGuestRepository;
+  private readonly Mock<IUnitOfWork> mockUnitOfWork;
   private readonly CreateGuestCommandHandler handler;
   private readonly CancellationToken ct;
 
   public CreateGuestCommandHandlerTests()
   {
     mockGuestRepository = new Mock<IGuestRepository>();
-    handler = new CreateGuestCommandHandler(mockGuestRepository.Object);
-    ct = default;
+    mockUnitOfWork = new Mock<IUnitOfWork>();
+    handler = new CreateGuestCommandHandler(mockGuestRepository.Object, mockUnitOfWork.Object);
+    ct = CancellationToken.None;
   }
 
   [Fact]
@@ -32,6 +35,7 @@ public class CreateGuestCommandHandlerTests
     Assert.NotNull(result.Value);
     result.IsSuccess.Should().BeTrue();
     result.Value.ValidateCreatedFrom(createGuestCommand);
-    mockGuestRepository.Verify(m => m.Add(result.Value, ct), Times.Once());
+    mockGuestRepository.Verify(m => m.Add(result.Value), Times.Once());
+    mockUnitOfWork.Verify(m => m.SaveChanges(ct), Times.Once());
   }
 }

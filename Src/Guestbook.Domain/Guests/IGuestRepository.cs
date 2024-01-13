@@ -1,7 +1,7 @@
 ﻿namespace Guestbook.Domain.Guests;
 public interface IGuestRepository
 {
-  Task Add(Guest guest, CancellationToken cancellationToken);
+  void Add(Guest guest);
 
   Task<Guest?> GetById(GuestId id, CancellationToken cancellationToken);
 }
