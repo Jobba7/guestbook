@@ -5,4 +5,9 @@ public static partial class Constants
   {
     public const string Name = "Guest";
   }
+
+  public static class Entry
+  {
+    public const string Content = "Entry Content";
+  }
 }

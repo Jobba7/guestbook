@@ -9,7 +9,7 @@ public sealed class CreateGuestCommandHandler(IGuestRepository guestRepository, 
   private readonly IGuestRepository guestRepository = guestRepository;
   private readonly IUnitOfWork unitOfWork = unitOfWork;
 
-  public async Task<Result<Guest>> Handle(CreateGuestCommand command, CancellationToken cancellationToken)
+  public async Task<Result<Guest>> Handle(CreateGuestCommand command, CancellationToken cancellationToken = default)
   {
     var guest = Guest.Create(command.Name);
 

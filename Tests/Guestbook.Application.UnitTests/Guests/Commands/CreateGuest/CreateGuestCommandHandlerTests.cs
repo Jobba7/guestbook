@@ -7,19 +7,19 @@ using Guestbook.Domain.Guests;
 using Moq;
 
 namespace Guestbook.Application.UnitTests.Guests.Commands.CreateGuest;
-public class CreateGuestCommandHandlerTests
+public class CreateEntryCommandHandlerTests
 {
   private readonly Mock<IGuestRepository> mockGuestRepository;
   private readonly Mock<IUnitOfWork> mockUnitOfWork;
   private readonly CreateGuestCommandHandler handler;
-  private readonly CancellationToken ct;
+  private readonly CancellationToken cancellation;
 
-  public CreateGuestCommandHandlerTests()
+  public CreateEntryCommandHandlerTests()
   {
     mockGuestRepository = new Mock<IGuestRepository>();
     mockUnitOfWork = new Mock<IUnitOfWork>();
     handler = new CreateGuestCommandHandler(mockGuestRepository.Object, mockUnitOfWork.Object);
-    ct = CancellationToken.None;
+    cancellation = CancellationToken.None;
   }
 
   [Fact]
@@ -29,13 +29,13 @@ public class CreateGuestCommandHandlerTests
     var createGuestCommand = CreateGuestCommandUtils.CreateCommand();
 
     // Act
-    var result = await handler.Handle(createGuestCommand, ct);
+    var result = await handler.Handle(createGuestCommand, cancellation);
 
     // Assert
     Assert.NotNull(result.Value);
     result.IsSuccess.Should().BeTrue();
     result.Value.ValidateCreatedFrom(createGuestCommand);
     mockGuestRepository.Verify(m => m.Add(result.Value), Times.Once());
-    mockUnitOfWork.Verify(m => m.SaveChanges(ct), Times.Once());
+    mockUnitOfWork.Verify(m => m.SaveChanges(cancellation), Times.Once());
   }
 }
