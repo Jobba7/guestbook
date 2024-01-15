@@ -1,5 +1,7 @@
-﻿namespace Guestbook.Application.Services.Authentication;
+﻿using Guestbook.Domain.Guests;
+
+namespace Guestbook.Application.Services.Authentication;
 public interface IJwtTokenGenerator
 {
-  string GenerateToken(Guid userId, string username);
+  string GenerateToken(Guest guest);
 }

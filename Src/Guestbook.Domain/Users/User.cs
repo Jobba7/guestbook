@@ -2,21 +2,22 @@
 
 namespace Guestbook.Domain.Users;
 
-public abstract class User<TId> : Entity<TId>
-    where TId : notnull
+public sealed class User : AggregateRoot<UserId>
 {
-  protected User(TId id, Name name, Email? email = null) : base(id)
+  private User(UserId id, string name) : base(id)
   {
     this.Name = name;
-    this.Email = email;
   }
 
-  public Name Name { get; private set; }
+  public string Name { get; private set; }
 
-  public Email? Email { get; private set; }
+  public static User Create(string name)
+  {
+    return new(UserId.New(), name);
+  }
 
   public override string ToString()
   {
-    return this.Name.ToString();
+    return Name;
   }
 }

@@ -1,13 +1,19 @@
-﻿using Guestbook.Application.Services.Authentication;
+﻿using Guestbook.Application.Services;
+using Guestbook.Application.Services.Authentication;
+using Guestbook.Domain.Guests;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
 namespace Guestbook.Infrastructure.Services.Authentication;
-public class JwtTokenGenerator : IJwtTokenGenerator
+internal sealed class JwtTokenGenerator : IJwtTokenGenerator
 {
-  public string GenerateToken(Guid userId, string username)
+  private readonly IClock clock;
+
+  internal JwtTokenGenerator(IClock clock) => this.clock = clock;
+
+  public string GenerateToken(Guest guest)
   {
     var tokenHandler = new JsonWebTokenHandler();
 
@@ -17,10 +23,10 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     {
       Subject = new ClaimsIdentity(new[]
       {
-         new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-         new Claim(JwtRegisteredClaimNames.Name, username),
+        new Claim(JwtRegisteredClaimNames.Sub, guest.Id.Value.ToString()),
+        new Claim(JwtRegisteredClaimNames.Name, guest.Name),
       }),
-      Expires = DateTime.UtcNow.AddDays(1),
+      Expires = clock.Now.AddDays(1).UtcDateTime,
       SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
     };
 

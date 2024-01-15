@@ -1,13 +1,30 @@
-﻿namespace Guestbook.Application.Services.Authentication;
+﻿using Guestbook.Application.Abstractions;
+using Guestbook.Domain.Guests;
+
+namespace Guestbook.Application.Services.Authentication;
 public class AuthenticationService : IAuthenticationService
 {
-  public AuthenticationResult Register(string username, string password)
+  private readonly IGuestRepository guestRepository;
+  private readonly IUnitOfWork unitOfWork;
+  private readonly IJwtTokenGenerator jwtTokenGenerator;
+
+  public AuthenticationService(IGuestRepository guestRepository, IUnitOfWork unitOfWork, IJwtTokenGenerator jwtTokenGenerator)
   {
-    throw new NotImplementedException();
+    this.guestRepository = guestRepository;
+    this.unitOfWork = unitOfWork;
+    this.jwtTokenGenerator = jwtTokenGenerator;
   }
 
-  public AuthenticationResult Login(string username, string password)
+  public async Task<AuthenticationResult> Register(string name, CancellationToken cancellationToken = default)
   {
-    throw new NotImplementedException();
+    var guest = Guest.Create(name);
+
+    guestRepository.Add(guest);
+
+    await unitOfWork.SaveChanges(cancellationToken);
+
+    var token = jwtTokenGenerator.GenerateToken(guest);
+
+    return new(guest.Id.Value, guest.Name, token);
   }
 }
