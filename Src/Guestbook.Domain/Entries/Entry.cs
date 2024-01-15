@@ -3,9 +3,9 @@ using Guestbook.Domain.Guests;
 
 namespace Guestbook.Domain.Entries;
 
-public sealed class Entry : AggregateRoot<EntryId>
+public sealed class Entry : AggregateRoot
 {
-  private Entry(EntryId id, string content, GuestId guestId) : base(id)
+  private Entry(Guid id, string content, GuestId guestId) : base(id)
   {
     Content = content;
     GuestId = guestId;
@@ -17,6 +17,6 @@ public sealed class Entry : AggregateRoot<EntryId>
 
   public static Entry Create(string content, GuestId guestId)
   {
-    return new(EntryId.New(), content, guestId);
+    return new(Guid.NewGuid(), content, guestId);
   }
 }

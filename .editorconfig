@@ -287,6 +287,12 @@ dotnet_diagnostic.CA1812.severity = none
 # CA1725: Parameter names should match base declaration
 dotnet_diagnostic.CA1725.severity = none
 
+# S3875: "operator==" should not be overloaded on reference types
+dotnet_diagnostic.S3875.severity = none
+
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = none
+
 [*.{cs,vb}]
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
