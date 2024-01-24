@@ -1,17 +1,18 @@
 ﻿namespace Guestbook.Domain.Abstractions;
 
-public abstract class Entity
+public abstract class Entity<TId>
+  where TId : ValueObject
 {
-  protected Entity(Guid id) => Id = id;
+  protected Entity(TId id) => Id = id;
 
-  public Guid Id { get; private init; }
+  public TId Id { get; private init; }
 
-  public static bool operator ==(Entity? left, Entity? right)
+  public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
   {
     return left?.Equals(right) ?? right is null;
   }
 
-  public static bool operator !=(Entity? left, Entity? right)
+  public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
   {
     return !(left == right);
   }
@@ -23,7 +24,7 @@ public abstract class Entity
 
   private bool IdentifierEquals(object? obj)
   {
-    return obj is Entity entity &&
+    return obj is Entity<TId> entity &&
       GetType() == entity.GetType() &&
       Id == entity.Id;
   }

@@ -7,7 +7,7 @@ public static partial class EntryExtension
 {
   public static void ValidateCreatedFrom(this Entry entry, CreateEntryCommand command)
   {
-    entry.Content.Should().Be(command.Content);
+    entry.Text.Should().Be(command.Content);
     entry.GuestId.Should().Be(command.GuestId);
   }
 }

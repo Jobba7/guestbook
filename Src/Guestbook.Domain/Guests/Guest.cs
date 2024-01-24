@@ -21,8 +21,9 @@ public sealed class Guest : AggregateRoot<GuestId>
     return new(GuestId.New(), name);
   }
 
-  public void AddEntry(EntryId entryId)
+  public void CreateEntry(string text)
   {
-    entryIds.Add(entryId);
+    var entry = Entry.Create(text, Id);
+    entryIds.Add(entry.Id);
   }
 }

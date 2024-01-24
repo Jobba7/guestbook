@@ -2,7 +2,11 @@
 
 namespace Guestbook.Domain.Entries;
 
-public sealed record EntryId(Guid Value) : ValueObject
+public sealed class EntryId : AggregateRootId
 {
+  private EntryId(Guid value) : base(value)
+  {
+  }
+
   public static EntryId New() => new(Guid.NewGuid());
 }

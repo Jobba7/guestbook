@@ -3,20 +3,20 @@ using Guestbook.Domain.Guests;
 
 namespace Guestbook.Domain.Entries;
 
-public sealed class Entry : AggregateRoot
+public sealed class Entry : AggregateRoot<EntryId>
 {
-  private Entry(Guid id, string content, GuestId guestId) : base(id)
+  private Entry(EntryId id, string text, GuestId guestId) : base(id)
   {
-    Content = content;
+    Text = text;
     GuestId = guestId;
   }
 
-  public string Content { get; private set; }
+  public string Text { get; private set; }
 
   public GuestId GuestId { get; private set; }
 
-  public static Entry Create(string content, GuestId guestId)
+  public static Entry Create(string text, GuestId guestId)
   {
-    return new(Guid.NewGuid(), content, guestId);
+    return new(EntryId.New(), text, guestId);
   }
 }
