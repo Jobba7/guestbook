@@ -3,5 +3,5 @@ public interface IGuestRepository
 {
   void Add(Guest guest);
 
-  Task<Guest?> GetById(GuestId id, CancellationToken cancellationToken);
+  Task<Guest?> GetById(GuestId id, CancellationToken cancellationToken = default);
 }

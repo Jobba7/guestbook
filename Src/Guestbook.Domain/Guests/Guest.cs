@@ -5,7 +5,7 @@ namespace Guestbook.Domain.Guests;
 
 public sealed class Guest : AggregateRoot<GuestId>
 {
-  private readonly List<EntryId> entryIds = [];
+  private readonly List<EntryOnDate> entryOnDates = [];
 
   private Guest(GuestId id, string name) : base(id)
   {
@@ -14,16 +14,32 @@ public sealed class Guest : AggregateRoot<GuestId>
 
   public string Name { get; private set; }
 
-  public IReadOnlyList<EntryId> Entries => entryIds.AsReadOnly();
+  public IReadOnlyList<EntryId> EntryIds => entryOnDates.Select(entry => entry.Id).ToList().AsReadOnly();
 
   public static Guest Create(string name)
   {
     return new(GuestId.New(), name);
   }
 
-  public void CreateEntry(string text)
+  public Result Add(Entry entry)
   {
-    var entry = Entry.Create(text, Id);
-    entryIds.Add(entry.Id);
+    if (EntryIds.Contains(entry.Id))
+    {
+      return Result.Success();
+    }
+
+    if (entryOnDates.Select(entry => entry.Visited).Contains(entry.Visited))
+    {
+      return Result.Failure(GuestErrors.AlreadyEntryOnDate);
+    }
+
+    entryOnDates.Add(entry);
+
+    return Result.Success();
+  }
+
+  public void Remove(Entry entry)
+  {
+    entryOnDates.Remove(entry);
   }
 }

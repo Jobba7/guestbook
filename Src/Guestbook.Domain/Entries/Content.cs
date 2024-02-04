@@ -2,25 +2,27 @@
 
 namespace Guestbook.Domain.Entries;
 
-public sealed record Content
+public sealed class Content : ValueObject
 {
-  private Content(string text, DateTime lastEdited)
+  private Content(string value)
   {
-    this.Text = text;
-    this.LastEdited = lastEdited;
+    Value = value;
   }
 
-  public string Text { get; }
+  public string Value { get; private init; }
 
-  public DateTime LastEdited { get; }
-
-  public static Result<Content> Create(string text)
+  public static Result<Content> From(string text)
   {
     if (string.IsNullOrWhiteSpace(text))
     {
-      return Result.Failure<Content>(GuestErrors.EmptyContent);
+      return Result.Failure<Content>(EntryErrors.EmptyContent);
     }
 
-    return Result.Success(new Content(text.Trim(), DateTime.Now));
+    return Result.Success(new Content(text));
+  }
+
+  protected override IEnumerable<object> GetEqualityComponents()
+  {
+    yield return Value;
   }
 }
