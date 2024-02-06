@@ -1,5 +1,4 @@
 ﻿using Guestbook.Domain.Abstractions;
-using Guestbook.Domain.Guests;
 
 namespace Guestbook.Domain.Guests.Entries;
 
@@ -31,10 +30,17 @@ public sealed class Entry : Entity<EntryId>
   public void Update(Content content)
   {
     Content = content;
+    SetUpdatedToNow();
   }
 
   public void Update(VisitDay? visited)
   {
     Visited = visited;
+    SetUpdatedToNow();
+  }
+
+  private void SetUpdatedToNow()
+  {
+    Updated = DateTime.Now;
   }
 }
