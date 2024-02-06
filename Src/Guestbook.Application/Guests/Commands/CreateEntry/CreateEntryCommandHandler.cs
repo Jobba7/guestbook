@@ -3,7 +3,7 @@ using Guestbook.Domain.Abstractions;
 using Guestbook.Domain.Guests;
 using Guestbook.Domain.Guests.Entries;
 
-namespace Guestbook.Application.Entries.Commands.CreateEntry;
+namespace Guestbook.Application.Guests.Commands.CreateEntry;
 public sealed class CreateEntryCommandHandler(IGuestRepository guestRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateEntryCommand, Entry>
 {
   public async Task<Result<Entry>> Handle(CreateEntryCommand command, CancellationToken cancellationToken = default)

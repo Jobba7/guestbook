@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Guestbook.Application.Entries.Commands.CreateEntry;
+using Guestbook.Application.Guests.Commands.CreateEntry;
 using Guestbook.Domain.Guests.Entries;
 
 namespace Guestbook.Application.UnitTests.TestUtils.Entries.Extensions;

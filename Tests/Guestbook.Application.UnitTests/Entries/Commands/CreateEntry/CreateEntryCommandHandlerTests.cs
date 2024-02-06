@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Guestbook.Application.Abstractions;
-using Guestbook.Application.Entries.Commands.CreateEntry;
+using Guestbook.Application.Guests.Commands.CreateEntry;
 using Guestbook.Application.UnitTests.Entries.Commands.TestUtils;
 using Guestbook.Application.UnitTests.TestUtils.Entries.Extensions;
 using Guestbook.Application.UnitTests.TestUtils.Guests.Extensions;
