@@ -35,19 +35,16 @@ public sealed class Guest : AggregateRoot<GuestId>
     return Result.Success(entry);
   }
 
-  private bool HasEntryOn(VisitDay? visited)
-  {
-    return visited is not null && entries.Exists(entry => entry.Visited != null && entry.Visited == visited);
-  }
-
   public Result UpdateEntryVisitDay(EntryId id, VisitDay? visitDay)
   {
-    var entry = entries.Find(entry => entry.Id == id);
+    var result = GetEntry(id);
 
-    if (entry is null)
+    if (result.IsFailure)
     {
-      return Result.Failure(EntryErrors.NotFound);
+      return result;
     }
+
+    var entry = result.Value;
 
     if (entry.Visited == visitDay)
     {
@@ -66,12 +63,14 @@ public sealed class Guest : AggregateRoot<GuestId>
 
   public Result UpdateEntryContent(EntryId id, Content content)
   {
-    var entry = entries.Find(entry => entry.Id == id);
+    var result = GetEntry(id);
 
-    if (entry is null)
+    if (result.IsFailure)
     {
-      return Result.Failure(EntryErrors.NotFound);
+      return result;
     }
+
+    var entry = result.Value;
 
     entry.Update(content);
 
@@ -81,5 +80,22 @@ public sealed class Guest : AggregateRoot<GuestId>
   public void Remove(Entry entry)
   {
     entries.Remove(entry);
+  }
+
+  private bool HasEntryOn(VisitDay? visited)
+  {
+    return visited is not null && entries.Exists(entry => entry.Visited != null && entry.Visited == visited);
+  }
+
+  private Result<Entry> GetEntry(EntryId id)
+  {
+    var entry = entries.Find(entry => entry.Id == id);
+
+    if (entry is null)
+    {
+      return Result.Failure<Entry>(EntryErrors.NotFound);
+    }
+
+    return Result.Success(entry);
   }
 }
