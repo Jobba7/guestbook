@@ -3,9 +3,9 @@ using Guestbook.Domain.Guests;
 
 namespace Guestbook.Domain.Entries;
 
-public sealed class Entry : AggregateRoot<EntryId>
+public sealed class Entry : Entity<EntryId>
 {
-  private Entry(EntryId id, Content content, VisitDay visited, DateTime created, GuestId guestId) : base(id)
+  private Entry(EntryId id, GuestId guestId, DateTime created, Content content, VisitDay? visited) : base(id)
   {
     Content = content;
     Visited = visited;
@@ -15,7 +15,7 @@ public sealed class Entry : AggregateRoot<EntryId>
 
   public Content Content { get; private set; }
 
-  public VisitDay Visited { get; private set; }
+  public VisitDay? Visited { get; private set; }
 
   public DateTime Created { get; private init; }
 
@@ -23,9 +23,9 @@ public sealed class Entry : AggregateRoot<EntryId>
 
   public GuestId GuestId { get; private init; }
 
-  public static Entry Create(Content content, VisitDay visited, GuestId guestId)
+  public static Entry Create(GuestId guestId, Content content, VisitDay? visited = null)
   {
-    return new(EntryId.New(), content, visited, DateTime.Now, guestId);
+    return new(EntryId.New(), guestId, DateTime.Now, content, visited);
   }
 
   public void Update(Content content)
@@ -33,7 +33,7 @@ public sealed class Entry : AggregateRoot<EntryId>
     Content = content;
   }
 
-  public void Update(VisitDay visited)
+  public void Update(VisitDay? visited)
   {
     Visited = visited;
   }

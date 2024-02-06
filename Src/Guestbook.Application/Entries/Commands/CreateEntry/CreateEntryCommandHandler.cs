@@ -1,18 +1,31 @@
 ﻿using Guestbook.Application.Abstractions;
 using Guestbook.Domain.Abstractions;
 using Guestbook.Domain.Entries;
+using Guestbook.Domain.Guests;
 
 namespace Guestbook.Application.Entries.Commands.CreateEntry;
-public sealed class CreateEntryCommandHandler(IEntryRepository entryRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateEntryCommand, Entry>
+public sealed class CreateEntryCommandHandler(IGuestRepository guestRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateEntryCommand, Entry>
 {
   public async Task<Result<Entry>> Handle(CreateEntryCommand command, CancellationToken cancellationToken = default)
   {
-    var entry = Entry.Create(command.Content, command.GuestId);
+    var guest = await guestRepository.GetById(command.GuestId, cancellationToken);
 
-    entryRepository.Add(entry);
+    if (guest is null)
+    {
+      return Result.Failure<Entry>(GuestErrors.NotFound);
+    }
+
+    var result = guest.CreateEntry(command.Content, command.VisitDay);
+
+    if (result.IsFailure)
+    {
+      return result;
+    }
+
+    guestRepository.Update(guest);
 
     await unitOfWork.SaveChanges(cancellationToken);
 
-    return Result.Success(entry);
+    return result;
   }
 }
