@@ -1,7 +1,7 @@
 ﻿using Guestbook.Domain.Abstractions;
 using Guestbook.Domain.Guests;
 
-namespace Guestbook.Domain.Entries;
+namespace Guestbook.Domain.Guests.Entries;
 
 public sealed class Entry : Entity<EntryId>
 {

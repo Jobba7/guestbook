@@ -1,4 +1,4 @@
-﻿namespace Guestbook.Domain.Entries;
+﻿namespace Guestbook.Domain.Guests.Entries;
 public interface IEntryRepository
 {
   void Add(Entry entry);

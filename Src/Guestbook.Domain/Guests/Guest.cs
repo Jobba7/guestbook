@@ -1,5 +1,5 @@
 ﻿using Guestbook.Domain.Abstractions;
-using Guestbook.Domain.Entries;
+using Guestbook.Domain.Guests.Entries;
 
 namespace Guestbook.Domain.Guests;
 
@@ -46,7 +46,7 @@ public sealed class Guest : AggregateRoot<GuestId>
 
     if (entry is null)
     {
-      return Result.Failure(GuestErrors.EntryNotFound);
+      return Result.Failure(EntryErrors.NotFound);
     }
 
     if (entry.Visited == visitDay)
@@ -70,7 +70,7 @@ public sealed class Guest : AggregateRoot<GuestId>
 
     if (entry is null)
     {
-      return Result.Failure(GuestErrors.EntryNotFound);
+      return Result.Failure(EntryErrors.NotFound);
     }
 
     entry.Update(content);

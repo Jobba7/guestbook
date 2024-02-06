@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Guestbook.Application.Entries.Commands.CreateEntry;
-using Guestbook.Domain.Entries;
+using Guestbook.Domain.Guests.Entries;
 
 namespace Guestbook.Application.UnitTests.TestUtils.Entries.Extensions;
 public static partial class EntryExtension

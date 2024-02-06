@@ -1,6 +1,6 @@
 ﻿using Guestbook.Domain.Abstractions;
 
-namespace Guestbook.Domain.Entries;
+namespace Guestbook.Domain.Guests.Entries;
 
 public sealed class VisitDay : ValueObject
 {
