@@ -1,0 +1,25 @@
+﻿@using Guestbook.Domain
+@model IEnumerable<Entry>
+
+<div class="text-center">
+    <h1 class="display-4">Gästebuch Einträge</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-primary">Neuen Eintrag erstellen</a>
+    </div>
+    <br />
+    @if (!Model.Any())
+    {
+        <p>Keine Einträge vorhanden.</p>
+    }
+    <div>
+        @foreach (var entry in Model)
+        {
+            <div class="card" style="margin-bottom: 20px">
+                <div class="card-body">
+                    <h6 class="card-text">@entry.Content</h6>
+                    <a asp-action="Details" asp-route-id="@entry.Id" class="btn btn-secondary">Ansehen</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

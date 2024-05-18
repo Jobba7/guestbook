@@ -6,19 +6,14 @@ public class Guest
 
   public string Name { get; private set; }
 
-  public IReadOnlyList<Guid> Entries => entries.AsReadOnly();
-
-  private readonly List<Guid> entries;
-
-  private Guest(Guid id, string name, List<Guid> entries)
+  private Guest(Guid id, string name)
   {
     Id = id;
     Name = name;
-    this.entries = entries;
   }
 
   public static Guest Create(string name)
   {
-    return new Guest(Guid.NewGuid(), name, new List<Guid>());
+    return new Guest(Guid.NewGuid(), name);
   }
 }

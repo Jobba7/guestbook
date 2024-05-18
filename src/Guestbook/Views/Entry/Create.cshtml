@@ -1,0 +1,16 @@
+﻿@model CreateEntryViewModel
+
+<div class="text-center">
+  <h1 class="display-4">Neuen Eintrag erstellen</h1>
+  <div class="col-md-12">
+    <form method="post">
+      <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control" rows="15" placeholder="Schreibe etwas ..."></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+      </div>
+      <button type="submit" class="btn btn-primary">Erstellen</button>
+      <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>
+    </form>
+  </div>
+</div>
